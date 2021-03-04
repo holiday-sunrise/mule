@@ -45,6 +45,7 @@ import org.mule.runtime.api.meta.model.operation.OperationModel;
 import org.mule.runtime.api.meta.model.parameter.ParameterModel;
 import org.mule.runtime.api.meta.model.source.SourceModel;
 import org.mule.runtime.api.meta.model.util.IdempotentExtensionWalker;
+import org.mule.runtime.api.util.Preconditions;
 import org.mule.runtime.api.util.Reference;
 import org.mule.runtime.api.util.collection.SmallMap;
 import org.mule.runtime.core.api.MuleContext;
@@ -465,9 +466,10 @@ public class MuleExtensionUtils {
     return new DefaultJavaExtensionModelLoader().loadExtensionModel(clazz.getClassLoader(), dslResolvingContext, params);
   }
 
-  public static String getImplicitConfigurationProviderName(MuleContext muleContext, ExtensionModel extensionModel,
+  public static String getImplicitConfigurationProviderName(String prefix, ExtensionModel extensionModel,
                                                             ConfigurationModel implicitConfigurationModel) {
-    return format("%s-%s-%s-implicit", muleContext.getId(), extensionModel.getName(), implicitConfigurationModel.getName());
+    Preconditions.checkArgument(isNotEmpty(prefix), "A prefix must be provided");
+    return format("%s-%s-%s-implicit", prefix, extensionModel.getName(), implicitConfigurationModel.getName());
   }
 
   /**
