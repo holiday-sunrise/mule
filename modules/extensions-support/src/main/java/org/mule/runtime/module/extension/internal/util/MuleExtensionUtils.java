@@ -48,7 +48,6 @@ import org.mule.runtime.api.meta.model.util.IdempotentExtensionWalker;
 import org.mule.runtime.api.util.Preconditions;
 import org.mule.runtime.api.util.Reference;
 import org.mule.runtime.api.util.collection.SmallMap;
-import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.extension.MuleExtensionModelProvider;
 import org.mule.runtime.core.api.source.MessageSource.BackPressureStrategy;
 import org.mule.runtime.core.api.transaction.TransactionConfig;
