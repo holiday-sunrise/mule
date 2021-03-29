@@ -1179,6 +1179,6 @@ public class DefaultMuleContext implements MuleContextWithRegistry, PrivilegedMu
 
     ffRegistry.registerFeature(ENABLE_POLICY_ISOLATION,
             ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
-                    && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.0.0"));
+                    && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0"));
   }
 }
