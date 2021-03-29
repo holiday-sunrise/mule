@@ -9,6 +9,7 @@ package org.mule.runtime.core.internal.context;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 import static org.apache.commons.lang3.SystemUtils.JAVA_VERSION;
+import static org.mule.runtime.api.config.MuleRuntimeFeature.ENABLE_POLICY_ISOLATION;
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.api.serialization.ObjectSerializer.DEFAULT_OBJECT_SERIALIZER_NAME;
 import static org.mule.runtime.core.api.config.MuleProperties.LOCAL_OBJECT_STORE_MANAGER;
@@ -76,6 +77,7 @@ import org.mule.runtime.api.util.concurrent.Latch;
 import org.mule.runtime.core.api.Injector;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.SingleResourceTransactionFactoryManager;
+import org.mule.runtime.core.api.config.FeatureFlaggingRegistry;
 import org.mule.runtime.core.api.config.MuleConfiguration;
 import org.mule.runtime.core.api.config.bootstrap.ArtifactType;
 import org.mule.runtime.core.api.config.bootstrap.BootstrapServiceDiscoverer;
@@ -144,6 +146,10 @@ import org.slf4j.Logger;
 import reactor.core.publisher.Hooks;
 
 public class DefaultMuleContext implements MuleContextWithRegistry, PrivilegedMuleContext {
+
+  static {
+    configurePolicyIsolation();
+  }
 
   /**
    * TODO: Remove these constants. These constants only make sense until we have a reliable solution for durable persistence in
@@ -1166,5 +1172,13 @@ public class DefaultMuleContext implements MuleContextWithRegistry, PrivilegedMu
 
   private org.mule.runtime.api.artifact.Registry getApiRegistry() {
     return getRegistry().lookupObject(OBJECT_REGISTRY);
+  }
+
+  private static void configurePolicyIsolation() {
+    FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
+
+    ffRegistry.registerFeature(ENABLE_POLICY_ISOLATION,
+            ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
+                    && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.0.0"));
   }
 }
