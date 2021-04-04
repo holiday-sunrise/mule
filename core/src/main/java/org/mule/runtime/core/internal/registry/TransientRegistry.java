@@ -66,16 +66,18 @@ public abstract class TransientRegistry extends AbstractRegistry {
       defaultEntries.put(ErrorTypeRepository.class.getName(), muleContext.getErrorTypeRepository());
       defaultEntries.put(ErrorTypeLocator.class.getName(), ((PrivilegedMuleContext) muleContext).getErrorTypeLocator());
       defaultEntries.put(OBJECT_NOTIFICATION_HANDLER, ((PrivilegedMuleContext) muleContext).getNotificationManager());
-      // Initial feature flagging service setup (it will be later overwritten by the MuleArtifactContext using the MuleContext's CustomizationService
+      // Initial feature flagging service setup (it will be later overwritten by the MuleArtifactContext using the MuleContext's
+      // CustomizationService
       FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
       FeatureFlaggingService featureFlaggingService = new FeatureFlaggingServiceBuilder()
-              .context(muleContext)
-              .configurations(ffRegistry.getFeatureConfigurations())
-              .build();
+          .context(muleContext)
+          .configurations(ffRegistry.getFeatureConfigurations())
+          .build();
       defaultEntries.put(FEATURE_FLAGGING_SERVICE_KEY, featureFlaggingService);
     }
 
-    defaultEntries.put("_muleLifecycleStateInjectorProcessor", new LifecycleStateInjectorProcessor(getLifecycleManager().getState()));
+    defaultEntries.put("_muleLifecycleStateInjectorProcessor",
+                       new LifecycleStateInjectorProcessor(getLifecycleManager().getState()));
     defaultEntries.put("_muleLifecycleManager", getLifecycleManager());
     registryMap.putAll(defaultEntries);
   }
