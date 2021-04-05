@@ -1176,9 +1176,12 @@ public class DefaultMuleContext implements MuleContextWithRegistry, PrivilegedMu
 
   private static void configurePolicyIsolation() {
     FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
-
-    ffRegistry.registerFeature(ENABLE_POLICY_ISOLATION,
-                               ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
-                                   && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0"));
+    ffRegistry.registerFeature(ENABLE_POLICY_ISOLATION, muleContext -> {
+     if (muleContext.getConfiguration() != null && muleContext.getConfiguration().getMinMuleVersion().isPresent()) {
+       return muleContext.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0");
+     } else {
+       return false;
+     }
+    });
   }
 }

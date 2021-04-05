@@ -50,7 +50,9 @@ public final class FeatureFlaggingServiceBuilder {
     Map<Feature, Boolean> features = new HashMap<>();
     LOGGER.debug("Configuring feature flags...");
 
-    final String id = context.getConfiguration().getId();
+    final String id =
+        context.getConfiguration() != null && context.getConfiguration().getId() != null ? context.getConfiguration().getId()
+            : "undefined (unconfigured mule context)";
     configurations.forEach((feature, p) -> {
       boolean enabled;
 
