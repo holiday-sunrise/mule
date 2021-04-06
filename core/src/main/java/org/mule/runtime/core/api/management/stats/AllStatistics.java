@@ -157,7 +157,13 @@ public class AllStatistics {
     FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
 
     ffRegistry.registerFeature(COMPUTE_CONNECTION_ERRORS_IN_STATS,
-                               ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
-                                   && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0"));
+                               muleContext -> {
+                                 if (muleContext.getConfiguration() != null
+                                     && muleContext.getConfiguration().getMinMuleVersion().isPresent()) {
+                                   return muleContext.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0");
+                                 } else {
+                                   return false;
+                                 }
+                               });
   }
 }

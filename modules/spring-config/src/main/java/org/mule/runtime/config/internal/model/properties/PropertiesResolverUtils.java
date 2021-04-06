@@ -341,8 +341,14 @@ public class PropertiesResolverUtils {
       FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
 
       ffRegistry.registerFeature(HONOUR_RESERVED_PROPERTIES,
-                                 ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
-                                     && ctx.getConfiguration().getMinMuleVersion().get().newerThan("4.2.2"));
+                                 muleContext -> {
+                                   if (muleContext.getConfiguration() != null
+                                       && muleContext.getConfiguration().getMinMuleVersion().isPresent()) {
+                                     return muleContext.getConfiguration().getMinMuleVersion().get().newerThan("4.2.2");
+                                   } else {
+                                     return false;
+                                   }
+                                 });
     }
   }
 

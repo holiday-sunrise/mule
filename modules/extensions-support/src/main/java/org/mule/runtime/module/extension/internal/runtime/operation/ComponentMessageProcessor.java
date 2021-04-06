@@ -1300,9 +1300,14 @@ public abstract class ComponentMessageProcessor<T extends ComponentModel> extend
     FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
 
     ffRegistry.registerFeature(HONOUR_OPERATION_RETRY_POLICY_TEMPLATE_OVERRIDE,
-                               ctx -> ctx.getConfiguration().getMinMuleVersion().isPresent()
-                                   && ctx.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0"));
-
+                               muleContext -> {
+                                 if (muleContext.getConfiguration() != null
+                                     && muleContext.getConfiguration().getMinMuleVersion().isPresent()) {
+                                   return muleContext.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0");
+                                 } else {
+                                   return false;
+                                 }
+                               });
   }
 
   protected boolean honourOperationRetryPolicyOverride() {
