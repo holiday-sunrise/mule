@@ -13,6 +13,7 @@ import static java.lang.System.getProperty;
 import static org.mule.runtime.api.config.MuleRuntimeFeature.COMPUTE_CONNECTION_ERRORS_IN_STATS;
 import static org.mule.runtime.api.util.MuleSystemProperties.MULE_DISABLE_PAYLOAD_STATISTICS;
 import static org.mule.runtime.api.util.MuleSystemProperties.MULE_ENABLE_STATISTICS;
+import static org.mule.runtime.core.api.config.FeatureFlaggingRegistry.getInstance;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -154,7 +155,7 @@ public class AllStatistics {
   }
 
   public static void configureComputeConnectionErrorsInStats() {
-    FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
+    FeatureFlaggingRegistry ffRegistry = getInstance();
 
     ffRegistry.registerFeature(COMPUTE_CONNECTION_ERRORS_IN_STATS,
                                muleContext -> {

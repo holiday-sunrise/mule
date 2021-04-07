@@ -12,6 +12,7 @@ import static org.apache.commons.lang3.SystemUtils.JAVA_VERSION;
 import static org.mule.runtime.api.config.MuleRuntimeFeature.ENABLE_POLICY_ISOLATION;
 import static org.mule.runtime.api.i18n.I18nMessageFactory.createStaticMessage;
 import static org.mule.runtime.api.serialization.ObjectSerializer.DEFAULT_OBJECT_SERIALIZER_NAME;
+import static org.mule.runtime.core.api.config.FeatureFlaggingRegistry.getInstance;
 import static org.mule.runtime.core.api.config.MuleProperties.LOCAL_OBJECT_STORE_MANAGER;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CLUSTER_CONFIGURATION;
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_COMPONENT_INITIAL_STATE_MANAGER;
@@ -1175,7 +1176,7 @@ public class DefaultMuleContext implements MuleContextWithRegistry, PrivilegedMu
   }
 
   private static void configurePolicyIsolation() {
-    FeatureFlaggingRegistry ffRegistry = FeatureFlaggingRegistry.getInstance();
+    FeatureFlaggingRegistry ffRegistry = getInstance();
     ffRegistry.registerFeature(ENABLE_POLICY_ISOLATION, muleContext -> {
       if (muleContext.getConfiguration() != null && muleContext.getConfiguration().getMinMuleVersion().isPresent()) {
         return muleContext.getConfiguration().getMinMuleVersion().get().atLeast("4.4.0");
