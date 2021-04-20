@@ -38,16 +38,9 @@
 
         <dependency>
             <groupId>org.raml</groupId>
-            <artifactId>raml-builder</artifactId>
-            <version>1.0.8-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.raml</groupId>
             <artifactId>raml-simple-emitter</artifactId>
             <version>1.0.8-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.mule.runtime</groupId>
