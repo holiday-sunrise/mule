@@ -6,6 +6,8 @@
  */
 package org.mule.runtime.http.api.server;
 
+import static org.raml.builder.RamlDocumentBuilder.document;
+
 import java.io.IOException;
 import java.util.Collection;
 
@@ -15,6 +17,7 @@ import org.mule.runtime.http.api.HttpConstants.Protocol;
 import org.mule.runtime.http.api.server.raml.spec.ApiSpec;
 import org.mule.runtime.http.api.server.ws.WebSocketHandler;
 import org.mule.runtime.http.api.server.ws.WebSocketHandlerManager;
+import org.raml.v2.api.model.v10.api.Api;
 
 /**
  * Represents a ServerSocket connection. Notice it should be started to be bound, stopped to be unbound and finally disposed to

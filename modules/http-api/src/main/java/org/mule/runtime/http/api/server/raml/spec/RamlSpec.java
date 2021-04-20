@@ -6,8 +6,12 @@
  */
 package org.mule.runtime.http.api.server.raml.spec;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import org.raml.simpleemitter.Emitter;
+import org.raml.v2.api.model.v10.api.Api;
 
 /**
  * A RAML Spec
@@ -16,26 +20,25 @@ public class RamlSpec implements ApiSpec {
 
   public static final String API_RETRIEVAL_PATH = "/apiSpec";
 
-  private Map<String, String> endpoints = new HashMap<String, String>();
+  private Api api;
 
-  @Override
-  public void addEndpoint(String endpointName) {
-    endpoints.put(endpointName, "");
+  public void setApi(Api api) {
+    this.api = api;
+  }
 
+  public Api getApi() {
+    return api;
   }
 
   @Override
   public String getSpecAsString() {
-    StringBuffer buffer = new StringBuffer();
-    for (String endpoint : endpoints.keySet()) {
-      if (endpoint.equals(API_RETRIEVAL_PATH)) {
-        continue;
-      }
-      buffer.append(endpoint);
-      buffer.append(" ");
+    try {
+      Emitter emitter = new Emitter();
+      StringWriter sw = new StringWriter();
+      emitter.emit(this.getApi(), sw);
+      return sw.toString();
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing raml");
     }
-    return buffer.toString();
   }
-
-
 }

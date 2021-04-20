@@ -12,13 +12,6 @@ package org.mule.runtime.http.api.server.raml.spec;
 public interface ApiSpec {
 
   /**
-   * Adds a an endpoint to the spec.
-   * 
-   * @param endpoint endpoint to be added
-   */
-  void addEndpoint(String endpoint);
-
-  /**
    * Retrieves the api spec as a string
    * 
    * @return the string representation of an apiﬂ
