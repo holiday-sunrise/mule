@@ -6,14 +6,15 @@
  */
 package org.mule.runtime.http.api.server;
 
+import java.io.IOException;
+import java.util.Collection;
+
 import org.mule.api.annotation.NoImplement;
 import org.mule.runtime.api.tls.TlsContextFactory;
 import org.mule.runtime.http.api.HttpConstants.Protocol;
+import org.mule.runtime.http.api.server.raml.spec.ApiSpec;
 import org.mule.runtime.http.api.server.ws.WebSocketHandler;
 import org.mule.runtime.http.api.server.ws.WebSocketHandlerManager;
-
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * Represents a ServerSocket connection. Notice it should be started to be bound, stopped to be unbound and finally disposed to
@@ -112,5 +113,12 @@ public interface HttpServer {
    */
   default WebSocketHandlerManager addWebSocketHandler(WebSocketHandler handler) {
     throw new UnsupportedOperationException("WebSockets are only supported in Enterprise Edition");
+  }
+
+  /**
+   * @return returns the raml spec for this server.
+   */
+  default ApiSpec getRamlSpec() {
+    throw new UnsupportedOperationException();
   }
 }
