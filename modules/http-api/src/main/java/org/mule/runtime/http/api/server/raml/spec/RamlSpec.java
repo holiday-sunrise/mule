@@ -11,7 +11,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import org.raml.simpleemitter.Emitter;
-import org.raml.v2.api.model.v10.api.Api;
+import org.raml.yagi.framework.model.NodeModel;
 
 /**
  * A RAML Spec
@@ -20,13 +20,13 @@ public class RamlSpec implements ApiSpec {
 
   public static final String API_RETRIEVAL_PATH = "/apiSpec";
 
-  private Api api;
+  private NodeModel api;
 
-  public void setApi(Api api) {
+  public void setApi(NodeModel api) {
     this.api = api;
   }
 
-  public Api getApi() {
+  public NodeModel getApi() {
     return api;
   }
 
@@ -35,7 +35,7 @@ public class RamlSpec implements ApiSpec {
     try {
       Emitter emitter = new Emitter();
       StringWriter sw = new StringWriter();
-      emitter.emit(this.getApi(), sw);
+      emitter.emitFromModel(this.getApi(), sw);
       return sw.toString();
     } catch (IOException e) {
       throw new RuntimeException("Error writing raml");

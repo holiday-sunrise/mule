@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.mule.runtime</groupId>
         <artifactId>mule-modules</artifactId>
@@ -40,6 +40,12 @@
             <groupId>org.raml</groupId>
             <artifactId>raml-simple-emitter</artifactId>
             <version>1.0.8-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.raml</groupId>
+                    <artifactId>raml-parser-2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -69,6 +75,11 @@
             <artifactId>mule-tests-allure</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.raml</groupId>
+            <artifactId>yagi</artifactId>
+            <version>1.0.47</version>
         </dependency>
     </dependencies>
 
