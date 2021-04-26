@@ -1313,13 +1313,13 @@ public abstract class AbstractDeploymentTestCase extends AbstractMuleTestCase {
     prober.check(new FileExists(appFolder));
   }
 
-  protected void executeApplicationFlow(String flowName) throws Exception {
-    executeApplicationFlow(flowName, null);
+  protected CoreEvent executeApplicationFlow(String flowName) throws Exception {
+    return executeApplicationFlow(flowName, null);
   }
 
-  protected void executeApplicationFlow(String flowName, String correlationId) throws Exception {
+  protected CoreEvent executeApplicationFlow(String flowName, String correlationId) throws Exception {
     ClassLoader appClassLoader = deploymentService.getApplications().get(0).getArtifactClassLoader().getClassLoader();
-    withContextClassLoader(appClassLoader, () -> {
+    return withContextClassLoader(appClassLoader, () -> {
       final FlowRunner flowRunner = new FlowRunner(deploymentService.getApplications().get(0).getRegistry(), flowName)
           .withPayload(TEST_MESSAGE);
 
