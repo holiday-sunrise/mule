@@ -42,7 +42,6 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mule.functional.services.TestServicesUtils.buildExpressionLanguageServiceFile;
@@ -99,7 +98,6 @@ import org.mule.runtime.api.util.concurrent.Latch;
 import org.mule.runtime.container.api.ModuleRepository;
 import org.mule.runtime.container.internal.DefaultModuleRepository;
 import org.mule.runtime.container.internal.MuleClassLoaderLookupPolicy;
-import org.mule.runtime.core.api.construct.Flow;
 import org.mule.runtime.core.api.event.CoreEvent;
 import org.mule.runtime.core.api.registry.SpiServiceRegistry;
 import org.mule.runtime.core.api.util.FileUtils;
@@ -340,9 +338,9 @@ public abstract class AbstractDeploymentTestCase extends AbstractMuleTestCase {
         .compile("mule-module-oracle-1.0.0.jar", "1.0.0");
 
     connectionExtensionJarFile = new ExtensionCompiler()
-        .compiling(getResourceFile("/org/foo/classloading/ConnectExtension.java"),
-                   getResourceFile("/org/foo/classloading/ConnectOperation.java"))
-        .including(getResourceFile("/org/foo/classloading/file.txt"),
+        .compiling(getResourceFile("/org/foo/connection/ConnectExtension.java"),
+                   getResourceFile("/org/foo/connection/ConnectOperation.java"))
+        .including(getResourceFile("/org/foo/connection/extension/file.txt"),
                    "file.txt")
         .compile("mule-module-connect-1.0.0.jar", "1.0.0");
 
@@ -1613,7 +1611,7 @@ public abstract class AbstractDeploymentTestCase extends AbstractMuleTestCase {
     mulePluginModelBuilder.withClassLoaderModelDescriptorLoader(new MuleArtifactLoaderDescriptorBuilder().setId(MULE_LOADER_ID)
         .build());
     mulePluginModelBuilder.withExtensionModelDescriber().setId(JAVA_LOADER_ID)
-        .addProperty("type", "org.foo.classloading.ConnectExtension")
+        .addProperty("type", "org.foo.connection.ConnectExtension")
         .addProperty("version", "1.0.0");
     return new ArtifactPluginFileBuilder("connectExtensionPlugin-1.0.0")
         .dependingOn(new JarFileBuilder("connectExtension", connectionExtensionJarFile))
