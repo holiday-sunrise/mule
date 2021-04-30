@@ -18,6 +18,6 @@ import org.mule.test.values.extension.resolver.SimpleValueProvider;
 public class ConfigWithParameterWithFieldValues {
 
   @Parameter
-  @FieldValues(targetPaths = "simple.path", value = SimpleValueProvider.class)
-  String channel;
+  @FieldValues(targetSelectors = "security.algorithm", value = SimpleValueProvider.class)
+  String securityHeaders;
 }

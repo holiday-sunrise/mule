@@ -16,7 +16,7 @@ import org.mule.test.values.extension.resolver.SimpleValueProvider;
 @MediaType(TEXT_PLAIN)
 public class SimpleSourceWithParameterWithFieldValues extends AbstractSdkSource {
 
-  @FieldValues(targetPaths = "simple.path", value = SimpleValueProvider.class)
+  @FieldValues(targetSelectors = "simple.path", value = SimpleValueProvider.class)
   @Parameter
   String channel;
 

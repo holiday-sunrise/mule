@@ -15,7 +15,7 @@ import org.mule.test.values.extension.resolver.SimpleValueProvider;
 public class ConnectionWithParameterWithFieldValues extends AbstractConnectionProvider {
 
   @Parameter
-  @FieldValues(targetPaths = "simple.path", value = SimpleValueProvider.class)
-  String channel;
+  @FieldValues(targetSelectors = "url.protocol", value = SimpleValueProvider.class)
+  String urlFormat;
 
 }
